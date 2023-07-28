@@ -69,6 +69,7 @@ export default function AppFunctional(props) {
       setIndex(index - 1);
       setSteps(steps + 1);
       setData({ ...data, steps: steps, x: Number(xy[1]) });
+      setMessage(initialMessage);
     }
   }
   function moveUp() {
@@ -78,6 +79,7 @@ export default function AppFunctional(props) {
       setIndex(index - 3);
       setSteps(steps + 1);
       setData({ ...data, steps: steps, y: Number(xy[4]) });
+      setMessage(initialMessage);
     }
   }
   useEffect(() => {
@@ -97,6 +99,7 @@ export default function AppFunctional(props) {
       setIndex(index + 1);
       setSteps(steps + 1);
       setData({ ...data, steps: steps, x: Number(xy[1]) });
+      setMessage(initialMessage);
     }
   }
   function moveDown() {
@@ -106,6 +109,7 @@ export default function AppFunctional(props) {
       setIndex(index + 3);
       setSteps(steps + 1);
       setData({ ...data, steps: steps, y: Number(xy[4]) });
+      setMessage(initialMessage);
     }
   }
   function onSubmit(evt) {
