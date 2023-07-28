@@ -21,10 +21,15 @@ export default function AppFunctional(props) {
     "(3, 3)",
   ];
   const [message, setMessage] = useState(initialMessage);
+  const [steps, setSteps] = useState(initialSteps);
+  const [email, setEmail] = useState(initialEmail);
+  const [index, setIndex] = useState(initialIndex);
+
   function getXY() {
     // Koordinatları izlemek için bir state e sahip olmak gerekli değildir.
     // Bunları hesaplayabilmek için "B" nin hangi indexte olduğunu bilmek yeterlidir.
   }
+  const xy = coordinates[index];
 
   function getXYMesaj() {
     // Kullanıcı için "Koordinatlar (2, 2)" mesajını izlemek için bir state'in olması gerekli değildir.
@@ -33,7 +38,10 @@ export default function AppFunctional(props) {
   }
 
   function reset() {
-    // Tüm stateleri başlangıç ​​değerlerine sıfırlamak için bu helperı kullanın.
+    setMessage(initialMessage);
+    setSteps(initialSteps);
+    setEmail(initialEmail);
+    setIndex(initialIndex);
   }
 
   function sonrakiIndex(yon) {
@@ -48,7 +56,10 @@ export default function AppFunctional(props) {
   }
 
   function onChange(evt) {
-    // inputun değerini güncellemek için bunu kullanabilirsiniz
+    setEmail(evt.target.value);
+  }
+  function onClick() {
+    setSteps(steps + 1);
   }
 
   function onSubmit(evt) {
@@ -59,7 +70,7 @@ export default function AppFunctional(props) {
     <div id="wrapper" className={props.className}>
       <div className="info">
         <h3 id="coordinates">Koordinatlar (2, 2)</h3>
-        <h3 id="steps">0 kere ilerlediniz</h3>
+        <h3 id="steps">{`${steps} kere ilerlediniz`}</h3>
       </div>
       <div id="grid">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
@@ -72,14 +83,30 @@ export default function AppFunctional(props) {
         <h3 id="message"></h3>
       </div>
       <div id="keypad">
-        <button id="left">SOL</button>
-        <button id="up">YUKARI</button>
-        <button id="right">SAĞ</button>
-        <button id="down">AŞAĞI</button>
-        <button id="reset">reset</button>
+        <button onClick={onClick} id="left">
+          SOL
+        </button>
+        <button onClick={onClick} id="up">
+          YUKARI
+        </button>
+        <button onClick={onClick} id="right">
+          SAĞ
+        </button>
+        <button onClick={onClick} id="down">
+          AŞAĞI
+        </button>
+        <button onClick={reset} id="reset">
+          reset
+        </button>
       </div>
       <form>
-        <input id="email" type="email" placeholder="email girin"></input>
+        <input
+          onChange={onChange}
+          id="email"
+          type="email"
+          placeholder="email girin"
+          value={email}
+        ></input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
