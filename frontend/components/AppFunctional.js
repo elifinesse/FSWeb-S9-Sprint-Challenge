@@ -31,7 +31,6 @@ export default function AppFunctional(props) {
     // Koordinatları izlemek için bir state e sahip olmak gerekli değildir.
     // Bunları hesaplayabilmek için "B" nin hangi indexte olduğunu bilmek yeterlidir.
   }
-  const xy = coordinates[index];
 
   function getXYMesaj() {
     // Kullanıcı için "Koordinatlar (2, 2)" mesajını izlemek için bir state'in olması gerekli değildir.
@@ -62,63 +61,67 @@ export default function AppFunctional(props) {
     //setData({ ...data, email: email });
   }
 
-  /*  function onClick() {
-    setSteps(steps + 1);
-    setData({ ...data, steps: steps });
-  } */
+  const xy = coordinates[index];
   function moveLeft() {
     if (index % 3 === 0) {
-      setMessage("Sola gidemezsin");
+      setMessage("Sola gidemezsiniz");
     } else {
       setIndex(index - 1);
       setSteps(steps + 1);
-      //setData({ ...data, x: xy[1] });
+      setData({ ...data, steps: steps, x: Number(xy[1]) });
     }
   }
   function moveUp() {
     if (index < 4) {
-      setMessage("Yukarı gidemezsin");
+      setMessage("Yukarıya gidemezsiniz");
     } else {
       setIndex(index - 3);
       setSteps(steps + 1);
-      //setData({ ...data, y: xy[4] });
+      setData({ ...data, steps: steps, y: Number(xy[4]) });
     }
   }
   useEffect(() => {
-    setData({ ...data, x: xy[1], y: xy[4], steps: steps, email: email });
-    console.log(data);
+    setData({
+      ...data,
+      x: Number(xy[1]),
+      y: Number(xy[4]),
+      steps: steps,
+      email: email,
+    });
   }, [index, steps, email]);
+  console.log(data);
   function moveRight() {
     if (index % 3 === 2) {
-      setMessage("Sağa gidemezsin");
+      setMessage("Sağa gidemezsiniz");
     } else {
       setIndex(index + 1);
       setSteps(steps + 1);
-      setData({ ...data, x: xy[1] });
+      setData({ ...data, steps: steps, x: Number(xy[1]) });
     }
   }
   function moveDown() {
     if (index < 9 && index > 5) {
-      setMessage("Aşağı gidemezsin");
+      setMessage("Aşağıya gidemezsiniz");
     } else {
       setIndex(index + 3);
       setSteps(steps + 1);
-      setData({ ...data, y: xy[4] });
+      setData({ ...data, steps: steps, y: Number(xy[4]) });
     }
   }
-
   function onSubmit(evt) {
     // payloadu POST etmek için bir submit handlera da ihtiyacınız var.
     evt.preventDefault();
-    console.log(evt);
     axios
       .post("http://localhost:9000/api/result", data)
       .then((res) => {
+        console.log(res);
         setMessage(res.data.message);
       })
       .catch((err) => {
         console.log(err);
+        setMessage(err.response.data.message);
       });
+    setEmail(initialEmail);
   }
 
   return (
